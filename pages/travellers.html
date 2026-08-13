@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Roadly • Travellers</title>
+
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/sections.css">
+
+</head>
+
+<body>
+
+<section class="trip-page">
+
+<div class="container">
+
+<h1>Who's Travelling?</h1>
+
+<p>
+Help us personalise your trip.
+</p>
+
+<div class="traveller-grid">
+
+<div class="input-group">
+
+<label>Adults</label>
+
+<input
+id="adults"
+type="number"
+min="1"
+value="2">
+
+</div>
+
+<div class="input-group">
+
+<label>Children</label>
+
+<input
+id="children"
+type="number"
+min="0"
+value="0">
+
+</div>
+
+<div class="input-group">
+
+<label>Seniors</label>
+
+<input
+id="seniors"
+type="number"
+min="0"
+value="0">
+
+</div>
+
+</div>
+
+<h2 style="margin-top:50px;">
+Trip Type
+</h2>
+
+<div class="trip-type-grid">
+
+<label class="trip-type-card">
+
+<input
+type="radio"
+name="tripType"
+value="Family">
+
+👨‍👩‍👧‍👦
+
+<h3>Family</h3>
+
+</label>
+
+<label class="trip-type-card">
+
+<input
+type="radio"
+name="tripType"
+value="Friends">
+
+🎉
+
+<h3>Friends</h3>
+
+</label>
+
+<label class="trip-type-card">
+
+<input
+type="radio"
+name="tripType"
+value="Solo">
+
+🧍
+
+<h3>Solo</h3>
+
+</label>
+
+<label class="trip-type-card">
+
+<input
+type="radio"
+name="tripType"
+value="Couple">
+
+❤️
+
+<h3>Couple</h3>
+
+</label>
+
+</div>
+
+<button
+id="saveTravellers"
+class="primary-btn">
+
+Continue →
+
+</button>
+
+</div>
+
+</section>
+
+<script src="../js/travellers.js"></script>
+
+</body>
+
+</html>

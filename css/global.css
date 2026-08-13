@@ -1,0 +1,297 @@
+/* ==========================================
+   ROADLY 2.0
+   GLOBAL STYLES
+========================================== */
+
+/* Google Font */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ==========================================
+   CSS VARIABLES
+========================================== */
+
+:root{
+
+    --primary:#2563EB;
+    --primary-dark:#1D4ED8;
+
+    --secondary:#60A5FA;
+
+    --dark:#0F172A;
+
+    --light:#F8FAFC;
+
+    --white:#FFFFFF;
+
+    --text:#1E293B;
+
+    --grey:#64748B;
+
+    --border:#E2E8F0;
+
+    --shadow:0 20px 60px rgba(15,23,42,.08);
+
+    --radius:18px;
+
+    --transition:.35s ease;
+
+}
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--light);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ==========================================
+   IMAGES
+========================================== */
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.container{
+
+    width:90%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+/* ==========================================
+   SECTIONS
+========================================== */
+
+section{
+
+    padding:110px 0;
+
+}
+
+h1{
+
+    font-size:72px;
+
+    line-height:1.1;
+
+    font-weight:800;
+
+}
+
+h2{
+
+    font-size:48px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+h3{
+
+    font-size:26px;
+
+    font-weight:600;
+
+}
+
+p{
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    color:var(--grey);
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.primary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:18px 42px;
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+    box-shadow:0 15px 35px rgba(37,99,235,.30);
+
+}
+
+.primary-btn:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-5px);
+
+}
+
+.secondary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:18px 42px;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    border-radius:50px;
+
+    backdrop-filter:blur(15px);
+
+    color:white;
+
+    transition:var(--transition);
+
+}
+
+.secondary-btn:hover{
+
+    background:white;
+
+    color:var(--primary);
+
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+input{
+
+    width:100%;
+
+    padding:18px 22px;
+
+    border:2px solid var(--border);
+
+    border-radius:14px;
+
+    outline:none;
+
+    font-size:17px;
+
+    transition:var(--transition);
+
+}
+
+input:focus{
+
+    border-color:var(--primary);
+
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+
+    background:var(--dark);
+
+    color:white;
+
+    text-align:center;
+
+    padding:80px 0;
+
+}
+
+footer p{
+
+    color:#CBD5E1;
+
+    margin-top:10px;
+
+}

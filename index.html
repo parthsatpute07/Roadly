@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Roadly | AI Road Trip Planner</title>
+
+<meta name="description"
+content="Roadly is an AI-powered road trip planner that helps you discover routes, weather, fuel cost and nearby attractions.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="container">
+
+<a href="#" class="logo">
+
+<div class="logo-icon">
+
+🚗
+
+</div>
+
+<div>
+
+<h2>Roadly</h2>
+
+<span>A Road Trip Planner</span>
+
+</div>
+
+</a>
+
+<nav>
+
+<ul class="nav-links">
+
+<li><a href="#home">Home</a></li>
+
+<li><a href="#features">Features</a></li>
+
+<li><a href="#about">About</a></li>
+
+<li><a href="#contact">Contact</a></li>
+
+</ul>
+
+</nav>
+
+<a href="pages/trip.html" class="nav-btn">
+
+Start Planning
+
+</a>
+
+</div>
+
+</header>
+
+<section class="hero" id="home">
+
+<div class="hero-overlay"></div>
+
+<div class="sun"></div>
+
+<div class="cloud cloud1"></div>
+
+<div class="cloud cloud2"></div>
+
+<div class="cloud cloud3"></div>
+
+<div class="mountains"></div>
+
+<div class="road">
+
+<div class="road-line"></div>
+
+</div>
+
+<div class="car">
+
+🚙
+
+</div>
+
+<div class="hero-content">
+
+<h1>
+
+Every Road Leads
+
+<span>Somewhere Extraordinary.</span>
+
+</h1>
+
+<p>
+
+Your intelligent AI companion for unforgettable road trips.
+
+Discover scenic routes, nearby attractions, weather forecasts,
+fuel estimates and personalised itineraries.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="pages/trip.html" class="primary-btn">
+
+Start Planning
+
+</a>
+
+<a href="#features" class="secondary-btn">
+
+Explore Features
+
+</a>
+
+</div>
+
+</div>
+
+<div class="scroll-indicator">
+
+↓
+
+</div>
+
+</section>
+
+<section class="planner" id="planner">
+
+<div class="container">
+
+<h2>
+
+Plan Your Journey
+
+</h2>
+
+<div class="planner-box">
+
+<input
+type="text"
+placeholder="Starting Location"
+id="start">
+
+<input
+type="text"
+placeholder="Destination"
+id="destination">
+
+<input
+type="number"
+placeholder="Number of Days"
+id="days">
+
+<button class="planner-btn"
+onclick="window.location.href='pages/interests.html'">
+
+    Continue →
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FEATURES ================= -->
+
+<section id="features" class="features">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>WHY ROADLY?</span>
+
+<h2>
+Everything You Need For The Perfect Road Trip
+</h2>
+
+<p>
+Roadly combines intelligent planning, live information, and AI recommendations
+to make every road trip smarter and more enjoyable.
+</p>
+
+</div>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<div class="feature-icon">🗺️</div>
+
+<h3>Smart Route Planning</h3>
+
+<p>
+
+Get optimized driving routes with distance,
+travel time and navigation.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">🌦️</div>
+
+<h3>Live Weather</h3>
+
+<p>
+
+Check real-time weather forecasts before and
+during your journey.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">📍</div>
+
+<h3>Nearby Attractions</h3>
+
+<p>
+
+Discover famous tourist attractions,
+restaurants and fuel stations nearby.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">⛽</div>
+
+<h3>Fuel Estimator</h3>
+
+<p>
+
+Know your expected fuel consumption
+before you even leave home.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">💰</div>
+
+<h3>Budget Planner</h3>
+
+<p>
+
+Calculate hotels,
+food,
+fuel and travel expenses instantly.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">🤖</div>
+
+<h3>AI Trip Planner</h3>
+
+<p>
+
+Receive a personalised itinerary created by AI
+based on your interests.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section id="about" class="how-it-works">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>HOW IT WORKS</span>
+
+<h2>Plan Your Trip in 4 Simple Steps</h2>
+
+<p>
+
+Roadly simplifies trip planning using AI and live travel data.
+
+</p>
+
+</div>
+
+<div class="timeline">
+
+<div class="step">
+
+<div class="step-number">
+
+1
+
+</div>
+
+<h3>Enter Your Trip</h3>
+
+<p>
+
+Choose your starting location,
+destination and number of travel days.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-number">
+
+2
+
+</div>
+
+<h3>Select Preferences</h3>
+
+<p>
+
+Choose interests, budget,
+vehicle and travellers.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-number">
+
+3
+
+</div>
+
+<h3>Roadly Analyses</h3>
+
+<p>
+
+Our AI collects routes,
+weather,
+places,
+fuel cost and budget.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-number">
+
+4
+
+</div>
+
+<h3>Start Exploring</h3>
+
+<p>
+
+Receive a beautiful travel dashboard
+and personalised itinerary.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+<div class="container">
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<h2 class="counter" data-target="25000">0</h2>
+
+<p>Trips Planned</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 class="counter" data-target="350">0</h2>
+
+<p>Destinations</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 class="counter" data-target="99">0</h2>
+
+<p>Happy Travellers (%)</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 class="counter" data-target="49">0</h2>
+
+<p>User Rating (4.9★)</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= APP PREVIEW ================= -->
+
+<section class="app-preview">
+
+<div class="container">
+
+<div class="preview-grid">
+
+<!-- LEFT -->
+
+<div class="preview-text">
+
+<span>ROADLY EXPERIENCE</span>
+
+<h2>
+
+Your Entire Road Trip
+
+In One Beautiful Dashboard
+
+</h2>
+
+<p>
+
+Roadly combines maps, live weather, nearby attractions,
+fuel estimation, travel budget and an AI-generated itinerary
+into one seamless experience.
+
+Plan smarter.
+Travel better.
+
+</p>
+
+<a href="#planner" class="primary-btn">
+
+🚗 Start Planning
+
+</a>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="phone">
+
+<div class="phone-notch"></div>
+
+<div class="phone-screen">
+
+<div class="screen-header">
+
+🚗 Roadly
+
+</div>
+
+<div class="weather-card">
+
+☀️ 28°C
+
+<span>Goa</span>
+
+</div>
+
+<div class="dashboard-item">
+
+🗺️ Smart Route
+
+</div>
+
+<div class="dashboard-item">
+
+📍 Nearby Places
+
+</div>
+
+<div class="dashboard-item">
+
+🌦️ Weather
+
+</div>
+
+<div class="dashboard-item">
+
+⛽ Fuel Estimate
+
+</div>
+
+<div class="dashboard-item">
+
+💰 Budget
+
+</div>
+
+<div class="dashboard-item">
+
+🤖 AI Itinerary
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+
+<section class="testimonials">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>TRUSTED BY TRAVELLERS</span>
+
+<h2>What People Say About Roadly</h2>
+
+<p>
+
+Thousands of travellers are discovering smarter road trips with Roadly.
+
+</p>
+
+</div>
+
+<div class="testimonial-grid">
+
+<div class="testimonial-card">
+
+<div class="stars">★★★★★</div>
+
+<p>
+
+"Roadly planned our entire Goa road trip in less than two minutes.
+The AI itinerary was incredibly accurate."
+
+</p>
+
+<div class="user">
+
+<div class="avatar">👨</div>
+
+<div>
+
+<h4>Abhishek Shelar</h4>
+
+<span>Travel Blogger</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">★★★★★</div>
+
+<p>
+
+"The weather, budget and nearby attractions were all available in one place.
+Absolutely loved the experience."
+
+</p>
+
+<div class="user">
+
+<div class="avatar">🧑</div>
+
+<div>
+
+<h4>Parth Sawant</h4>
+
+<span>Solo Traveller</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">★★★★★</div>
+
+<p>
+
+"I've never planned a road trip this easily.
+Roadly feels like having a personal travel assistant."
+
+</p>
+
+<div class="user">
+
+<div class="avatar">🧑</div>
+
+<div>
+
+<h4>Prithviraj Wagh</h4>
+
+<span>Software Engineer</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FAQ ================= -->
+
+<section class="faq">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>FAQ</span>
+
+<h2>Frequently Asked Questions</h2>
+
+<p>
+
+Everything you need to know about Roadly.
+
+</p>
+
+</div>
+
+<div class="faq-container">
+
+<div class="faq-item">
+
+<button class="faq-question">
+
+What is Roadly?
+
+<span>+</span>
+
+</button>
+
+<div class="faq-answer">
+
+<p>
+
+Roadly is an AI-powered road trip planner that helps you discover routes, weather, nearby attractions, fuel costs, budgets, and personalised itineraries.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<button class="faq-question">
+
+Is Roadly free to use?
+
+<span>+</span>
+
+</button>
+
+<div class="faq-answer">
+
+<p>
+
+Yes. The current version is completely free. Premium features will be introduced in future versions.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<button class="faq-question">
+
+Can I use Roadly on my phone?
+
+<span>+</span>
+
+</button>
+
+<div class="faq-answer">
+
+<p>
+
+Yes. Roadly is fully responsive and works on desktops, tablets and smartphones.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<button class="faq-question">
+
+Does Roadly work offline?
+
+<span>+</span>
+
+</button>
+
+<div class="faq-answer">
+
+<p>
+
+Roadly stores your latest trip locally so you can still access your itinerary even if your connection drops.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+
+<section class="cta">
+
+<div class="container">
+
+<h2>
+
+Ready for Your Next Adventure?
+
+</h2>
+
+<p>
+
+Join thousands of travellers using Roadly to plan smarter,
+safer and more memorable road trips.
+
+</p>
+
+<div class="cta-buttons">
+
+<a href="#planner" class="primary-btn">
+
+🚗 Plan My Trip
+
+</a>
+
+<a href="#features" class="secondary-btn dark">
+
+Learn More
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+
+<h2>🚗 Roadly</h2>
+
+<p>
+
+Your AI-powered road trip companion.
+
+Making every journey smarter,
+safer and unforgettable.
+
+</p>
+
+</div>
+
+<div>
+
+<h3>Product</h3>
+
+<ul>
+
+<li><a href="#">Features</a></li>
+
+<li><a href="#">Pricing</a></li>
+
+<li><a href="#">Roadmap</a></li>
+
+<li><a href="#">Updates</a></li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Company</h3>
+
+<ul>
+
+<li><a href="#">About</a></li>
+
+<li><a href="#">Careers</a></li>
+
+<li><a href="#">Contact</a></li>
+
+<li><a href="#">Blog</a></li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Follow Us</h3>
+
+<ul>
+
+<li>📸 Instagram</li>
+
+<li>🐦 X</li>
+
+<li>💼 LinkedIn</li>
+
+<li>▶ YouTube</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<hr>
+
+<p class="copyright">
+
+© 2026 Roadly. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/animations.js"></script>
+
+</body>
+
+</html>

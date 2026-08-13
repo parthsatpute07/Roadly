@@ -1,0 +1,390 @@
+/* ==========================================
+   ROADLY HERO
+========================================== */
+
+.hero{
+
+    position:relative;
+
+    height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        180deg,
+        #4DA8FF 0%,
+        #A8D8FF 45%,
+        #F8FAFC 100%
+    );
+
+}
+
+/* ===========================
+   HERO CONTENT
+=========================== */
+
+.hero-content{
+
+    position:relative;
+
+    z-index:100;
+
+    max-width:900px;
+
+    padding:20px;
+
+}
+
+.hero h1{
+
+    font-size:78px;
+
+    line-height:1.1;
+
+    font-weight:800;
+
+    color:#0F172A;
+
+}
+
+.hero h1 span{
+
+    display:block;
+
+    color:#2563EB;
+
+}
+
+.hero p{
+
+    margin:35px auto;
+
+    max-width:700px;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+    color:#475569;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    margin-top:40px;
+
+}
+
+/* ===========================
+   SUN
+=========================== */
+
+.sun{
+
+    position:absolute;
+
+    top:90px;
+
+    right:120px;
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:50%;
+
+    background:#FFD54A;
+
+    box-shadow:
+    0 0 80px #FFD54A,
+    0 0 150px rgba(255,213,74,.4);
+
+}
+
+/* ===========================
+   CLOUDS
+=========================== */
+
+.cloud{
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:100px;
+
+    opacity:.9;
+
+}
+
+.cloud::before{
+
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:50%;
+
+}
+
+.cloud::after{
+
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:50%;
+
+}
+
+.cloud1{
+
+    width:160px;
+
+    height:55px;
+
+    top:120px;
+
+    left:10%;
+
+}
+
+.cloud1::before{
+
+    width:70px;
+
+    height:70px;
+
+    left:20px;
+
+    top:-30px;
+
+}
+
+.cloud1::after{
+
+    width:60px;
+
+    height:60px;
+
+    right:20px;
+
+    top:-20px;
+
+}
+
+.cloud2{
+
+    width:180px;
+
+    height:60px;
+
+    top:220px;
+
+    right:12%;
+
+}
+
+.cloud2::before{
+
+    width:80px;
+
+    height:80px;
+
+    left:25px;
+
+    top:-35px;
+
+}
+
+.cloud2::after{
+
+    width:70px;
+
+    height:70px;
+
+    right:25px;
+
+    top:-25px;
+
+}
+
+.cloud3{
+
+    width:140px;
+
+    height:45px;
+
+    top:80px;
+
+    left:60%;
+
+}
+
+.cloud3::before{
+
+    width:55px;
+
+    height:55px;
+
+    left:18px;
+
+    top:-22px;
+
+}
+
+.cloud3::after{
+
+    width:50px;
+
+    height:50px;
+
+    right:18px;
+
+    top:-18px;
+
+}
+
+/* ===========================
+   MOUNTAINS
+=========================== */
+
+.mountains{
+
+    position:absolute;
+
+    bottom:110px;
+
+    left:0;
+
+    width:100%;
+
+    height:240px;
+
+    background:
+    linear-gradient(
+        to top,
+        #355E3B,
+        #6FAF68
+    );
+
+    clip-path:polygon(
+        0 100%,
+        0 65%,
+        10% 45%,
+        20% 70%,
+        35% 25%,
+        48% 70%,
+        60% 40%,
+        72% 75%,
+        85% 35%,
+        100% 65%,
+        100% 100%
+    );
+
+}
+
+/* ===========================
+   ROAD
+=========================== */
+
+.road{
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:120px;
+
+    background:#2D2D2D;
+
+}
+
+.road-line{
+
+    position:absolute;
+
+    left:0;
+
+    top:50%;
+
+    width:100%;
+
+    height:8px;
+
+    transform:translateY(-50%);
+
+    background:
+    repeating-linear-gradient(
+        to right,
+
+        transparent 0px,
+
+        transparent 60px,
+
+        white 60px,
+
+        white 110px
+
+    );
+
+}
+
+/* ===========================
+   CAR
+=========================== */
+
+.car{
+
+    position:absolute;
+
+    bottom:48px;
+
+    left:-120px;
+
+    font-size:72px;
+
+    z-index:50;
+
+}
+
+/* ===========================
+   SCROLL
+=========================== */
+
+.scroll-indicator{
+
+    position:absolute;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:30px;
+
+    color:#2563EB;
+
+}

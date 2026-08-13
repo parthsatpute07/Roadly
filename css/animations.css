@@ -1,0 +1,366 @@
+/* ==========================================
+   ROADLY ANIMATIONS
+========================================== */
+
+/* ==========================
+   HERO CONTENT
+========================== */
+
+.hero-content{
+
+    animation:fadeUp 1.2s ease;
+
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.primary-btn,
+.secondary-btn{
+
+    transition:.35s;
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-6px) scale(1.05);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.35);
+
+}
+
+.secondary-btn:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ==========================
+   CLOUDS
+========================== */
+
+.cloud1{
+
+    animation:cloudMove1 45s linear infinite;
+
+}
+
+.cloud2{
+
+    animation:cloudMove2 60s linear infinite;
+
+}
+
+.cloud3{
+
+    animation:cloudMove3 35s linear infinite;
+
+}
+
+@keyframes cloudMove1{
+
+    from{
+
+        transform:translateX(-250px);
+
+    }
+
+    to{
+
+        transform:translateX(calc(100vw + 250px));
+
+    }
+
+}
+
+@keyframes cloudMove2{
+
+    from{
+
+        transform:translateX(250px);
+
+    }
+
+    to{
+
+        transform:translateX(calc(-100vw - 250px));
+
+    }
+
+}
+
+@keyframes cloudMove3{
+
+    from{
+
+        transform:translateX(-150px);
+
+    }
+
+    to{
+
+        transform:translateX(calc(100vw + 150px));
+
+    }
+
+}
+
+/* ==========================
+   SUN
+========================== */
+
+.sun{
+
+    animation:sunGlow 4s ease-in-out infinite;
+
+}
+
+@keyframes sunGlow{
+
+    0%{
+
+        transform:scale(1);
+
+        box-shadow:
+        0 0 70px #FFD54A;
+
+    }
+
+    50%{
+
+        transform:scale(1.08);
+
+        box-shadow:
+        0 0 130px #FFD54A;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        box-shadow:
+        0 0 70px #FFD54A;
+
+    }
+
+}
+
+/* ==========================
+   CAR
+========================== */
+
+.car{
+
+    animation:driveCar 12s linear infinite;
+
+}
+
+@keyframes driveCar{
+
+    0%{
+
+        left:-180px;
+
+    }
+
+    100%{
+
+        left:110%;
+
+    }
+
+}
+
+/* ==========================
+   ROAD
+========================== */
+
+.road-line{
+
+    animation:roadMove .8s linear infinite;
+
+}
+
+@keyframes roadMove{
+
+    from{
+
+        background-position:0;
+
+    }
+
+    to{
+
+        background-position:-170px;
+
+    }
+
+}
+
+/* ==========================
+   SCROLL INDICATOR
+========================== */
+
+.scroll-indicator{
+
+    animation:bounce 1.5s infinite;
+
+}
+
+@keyframes bounce{
+
+    0%{
+
+        transform:translate(-50%,0);
+
+    }
+
+    50%{
+
+        transform:translate(-50%,12px);
+
+    }
+
+    100%{
+
+        transform:translate(-50%,0);
+
+    }
+
+}
+
+/* ==========================
+   HERO TEXT
+========================== */
+
+.hero h1{
+
+    animation:titleAnimation 1s ease;
+
+}
+
+.hero p{
+
+    animation:fadeText 1.5s ease;
+
+}
+
+@keyframes titleAnimation{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(70px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeText{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(80px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================
+   FLOATING EFFECT
+========================== */
+
+.hero-buttons{
+
+    animation:floatButtons 5s ease-in-out infinite;
+
+}
+
+@keyframes floatButtons{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-6px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+/* ==========================
+   PHONE FLOAT
+========================== */
+
+@keyframes phoneFloat{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-18px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}

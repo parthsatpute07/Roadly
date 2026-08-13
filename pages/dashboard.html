@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+
+Roadly Dashboard
+
+</title>
+
+<link rel="stylesheet"
+href="../css/global.css">
+
+<link rel="stylesheet"
+href="../css/dashboard.css">
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<h2>
+
+🚗 Roadly
+
+</h2>
+
+<aside class="sidebar">
+
+    <h2>🚗 Roadly</h2>
+
+    <nav>
+
+        <a href="#dashboard" class="sidebar-link active">
+            🏠 Dashboard
+        </a>
+
+        <a href="#route" class="sidebar-link">
+            🗺 Route
+        </a>
+
+        <a href="#attractions" class="sidebar-link">
+            📍 Attractions
+        </a>
+
+        <a href="#hotels" class="sidebar-link">
+            🏨 Hotels
+        </a>
+
+        <a href="#restaurants" class="sidebar-link">
+            🍴 Restaurants
+        </a>
+
+        <a href="#weather" class="sidebar-link">
+            🌤 Weather
+        </a>
+
+        <a href="#budget-section" class="sidebar-link">
+            💰 Budget
+        </a>
+
+        <a href="#ai-planner" class="sidebar-link">
+            🤖 AI Planner
+        </a>
+
+        <a href="#saved-trips" class="sidebar-link">
+            ❤️ Saved Trips
+        </a>
+
+        <a href="#settings" class="sidebar-link">
+            ⚙ Settings
+        </a>
+
+    </nav>
+
+</aside>
+
+</aside>
+
+<!-- Main -->
+
+<main class="main" id="dashboard">
+
+<!-- HERO SECTION -->
+
+<section class="dashboard-hero">
+
+    <div class="hero-left">
+
+        <span id="greeting">Good Morning 👋</span>
+
+        <h2 id="tripTitle">
+            Your Road Trip
+        </h2>
+
+        <p id="tripSubtitle">
+            Planning your perfect adventure.
+        </p>
+
+    </div>
+
+    <div class="hero-right">
+
+        <button class="primary-btn">
+
+            📄 Download PDF
+
+        </button>
+
+        <button class="secondary-btn">
+
+            ❤️ Save Trip
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- SUMMARY -->
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+
+        <span>📏</span>
+
+        <h3>Distance</h3>
+
+        <p id="distance">Loading...</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <span>⏱</span>
+
+        <h3>Travel Time</h3>
+
+        <p id="travelTime">Loading...</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <span>⛽</span>
+
+        <h3>Fuel Cost</h3>
+
+        <p id="fuelCost">Loading...</p>
+
+    </div>
+
+        <div class="summary-card" id="budget-section">
+
+        <span>💰</span>
+
+        <h3>Budget</h3>
+
+        <p id="budget">Loading...</p>
+
+    </div>
+
+</div>
+
+
+<!-- WEATHER -->
+
+<div class="weather-card">
+
+    <div class="weather-main">
+
+        <span id="weatherIcon">
+            ☀️
+        </span>
+
+        <span id="weatherTemp">
+            --°C
+        </span>
+
+        <span id="weatherCondition">
+            Loading weather...
+        </span>
+
+    </div>
+
+
+    <div class="weather-details">
+
+        <div class="weather-detail">
+
+            <strong>💧 Humidity</strong>
+
+            <span id="humidity">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="weather-detail">
+
+            <strong>💨 Wind</strong>
+
+            <span id="wind">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="weather-detail">
+
+            <strong>🌅 Sunrise</strong>
+
+            <span id="sunrise">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="weather-detail">
+
+            <strong>🌇 Sunset</strong>
+
+            <span id="sunset">
+                --
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= ROUTE OVERVIEW ================= -->
+
+<section class="route-overview" id="route">
+
+    <div class="route-header">
+
+        <h2>🛣 Route Overview</h2>
+
+        <span class="route-badge">
+
+            Fastest Route
+
+        </span>
+
+    </div>
+
+    <div class="route-path">
+
+        <div class="location">
+
+            <h3 id="startLocation">
+
+                📍 Starting Point
+
+            </h3>
+
+        </div>
+
+        <div class="route-line">
+
+            <div class="car">
+
+                🚗
+
+            </div>
+
+        </div>
+
+        <div class="location">
+
+            <h3 id="destinationLocation">
+
+                📍 Destination
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <div class="route-stats">
+
+        <div class="route-box">
+
+            <h4>📏 Distance</h4>
+
+            <p id="routeDistance">
+
+                -- km
+
+            </p>
+
+        </div>
+
+        <div class="route-box">
+
+            <h4>⏱ Travel Time</h4>
+
+            <p id="routeTime">
+
+                --hrs
+
+            </p>
+
+        </div>
+
+        <div class="route-box">
+
+            <h4>⛽ Fuel Cost</h4>
+
+            <p id="routeFuel">
+
+                -- ₹
+
+            </p>
+
+        </div>
+
+        <div class="route-box">
+
+            <h4>🛣 Best Route</h4>
+
+            <p id="bestRoute">
+
+                Calculating...
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= MAP ================= -->
+
+<section class="map-section">
+
+<div class="section-header">
+
+<h2>
+🗺 Interactive Route Map
+</h2>
+
+<button class="map-btn">
+Live Navigation
+</button>
+
+</div>
+
+<div id="map"></div>
+
+</section>
+
+<!-- ================= TOP ATTRACTIONS ================= -->
+
+<section class="attractions-section" id="attractions">
+
+<div class="section-header">
+
+<h2>
+
+⭐ Top Attractions
+
+</h2>
+
+<button class="view-all-btn">
+
+View All
+
+</button>
+
+</div>
+
+<div
+id="placesContainer"
+class="places-grid">
+
+</div>
+
+</section>
+
+<!-- ================= HOTELS ================= -->
+
+<section class="dashboard-placeholder" id="hotels">
+
+    <div class="section-header">
+
+        <h2>🏨 Hotels</h2>
+
+    </div>
+
+    <div class="placeholder-box">
+
+        <div class="placeholder-icon">
+            🏨
+        </div>
+
+        <h3>Hotels Coming Soon</h3>
+
+        <p>
+            We are working on finding the best hotels
+            near your destination.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESTAURANTS ================= -->
+
+<section class="dashboard-placeholder" id="restaurants">
+
+    <div class="section-header">
+
+        <h2>🍴 Restaurants</h2>
+
+    </div>
+
+    <div class="placeholder-box">
+
+        <div class="placeholder-icon">
+            🍴
+        </div>
+
+        <h3>Restaurants Coming Soon</h3>
+
+        <p>
+            Soon Roadly will help you discover
+            great places to eat along your journey.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- AI -->
+
+<section id="ai-planner">
+
+    <h2>
+        🤖 AI Itinerary
+    </h2>
+
+    <div
+        id="aiPlan"
+        class="ai-box">
+
+        Generating...
+
+    </div>
+
+</section>
+
+<!-- ================= SAVED TRIPS ================= -->
+
+<section class="dashboard-placeholder" id="saved-trips">
+
+    <div class="section-header">
+
+        <h2>❤️ Saved Trips</h2>
+
+    </div>
+
+    <div class="placeholder-box">
+
+        <div class="placeholder-icon">
+            ❤️
+        </div>
+
+        <h3>Your Saved Trips</h3>
+
+        <p>
+            Saved trips will appear here.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section class="dashboard-placeholder" id="settings">
+
+    <div class="section-header">
+
+        <h2>⚙ Settings</h2>
+
+    </div>
+
+    <div class="placeholder-box">
+
+        <div class="placeholder-icon">
+            ⚙️
+        </div>
+
+        <h3>Dashboard Settings</h3>
+
+        <p>
+            Trip and application settings will be available here.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/openroute.js"></script>
+
+<script src="../js/geoapify.js"></script>
+
+<script src="../js/gemini.js"></script>
+
+<script src="../api/ai.js"></script>
+
+<script src="../js/weather.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/sidebar.js"></script>
+
+</body>
+
+</html>

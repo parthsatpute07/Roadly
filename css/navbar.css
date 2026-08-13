@@ -1,0 +1,253 @@
+/* ==========================================
+   ROADLY 2.0
+   NAVBAR
+========================================== */
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    transition:.4s ease;
+
+    padding:20px 0;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.navbar .container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo-icon{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #60A5FA
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:28px;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+
+}
+
+.logo h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    color:white;
+
+    line-height:1;
+
+}
+
+.logo span{
+
+    display:block;
+
+    font-size:13px;
+
+    color:#E2E8F0;
+
+    margin-top:4px;
+
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-links{
+
+    display:flex;
+
+    gap:45px;
+
+}
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+/* underline animation */
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:#60A5FA;
+
+    transition:.35s;
+
+}
+
+.nav-links a:hover{
+
+    color:#60A5FA;
+
+}
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.nav-btn{
+
+    padding:14px 28px;
+
+    background:#2563EB;
+
+    color:white;
+
+    border-radius:40px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    box-shadow:0 12px 30px rgba(37,99,235,.35);
+
+}
+
+.nav-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:#1D4ED8;
+
+}
+
+/* =========================
+   SCROLLED NAVBAR
+========================= */
+
+.navbar.scrolled{
+
+    padding:12px 0;
+
+    background:white;
+
+    box-shadow:0 10px 40px rgba(0,0,0,.08);
+
+}
+
+.navbar.scrolled .logo h2{
+
+    color:#0F172A;
+
+}
+
+.navbar.scrolled .logo span{
+
+    color:#64748B;
+
+}
+
+.navbar.scrolled .nav-links a{
+
+    color:#1E293B;
+
+}
+
+.navbar.scrolled .nav-links a:hover{
+
+    color:#2563EB;
+
+}
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.menu-toggle{
+
+    display:none;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    color:white;
+
+}
+
+.navbar.scrolled .menu-toggle{
+
+    color:#1E293B;
+
+}

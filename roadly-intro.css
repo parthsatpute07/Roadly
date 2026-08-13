@@ -1,0 +1,548 @@
+/* =====================================
+   ROADLY INTRO PAGE
+   Completely isolated styling
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #07111f;
+}
+
+
+/* =====================================
+   MAIN SCREEN
+===================================== */
+
+.intro-screen {
+
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #132b47 0%,
+            #09192c 45%,
+            #030a13 100%
+        );
+
+}
+
+
+/* =====================================
+   GLOW EFFECTS
+===================================== */
+
+.glow {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    opacity: 0.35;
+
+    pointer-events: none;
+
+}
+
+.glow-one {
+
+    width: 350px;
+    height: 350px;
+
+    background: #2d8cff;
+
+    top: 10%;
+    left: 15%;
+
+}
+
+.glow-two {
+
+    width: 300px;
+    height: 300px;
+
+    background: #00d4ff;
+
+    right: 10%;
+    bottom: 10%;
+
+}
+
+
+/* =====================================
+   ROADLY CONTAINER
+===================================== */
+
+.roadly-container {
+
+    position: relative;
+
+    width: 520px;
+    height: 420px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+/* =====================================
+   BRAND
+===================================== */
+
+.brand {
+
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+}
+
+
+/* Tagline */
+
+.tagline {
+
+    margin-bottom: 14px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 5px;
+
+    color: #8fb7df;
+
+    opacity: 0;
+
+    animation:
+        fadeUp 1s ease forwards;
+
+    animation-delay: 0.4s;
+
+}
+
+
+/* Main logo */
+
+.brand h1 {
+
+    font-size: 82px;
+
+    font-weight: 900;
+
+    letter-spacing: 8px;
+
+    color: white;
+
+    text-shadow:
+        0 0 15px rgba(255,255,255,0.2),
+        0 0 35px rgba(40,140,255,0.35);
+
+    opacity: 0;
+
+    transform: scale(0.8);
+
+    animation:
+        logoAppear 1.2s
+        cubic-bezier(.17,.67,.35,1.2)
+        forwards;
+
+    animation-delay: 0.7s;
+
+}
+
+
+/* Subtitle */
+
+.subtitle {
+
+    margin-top: 12px;
+
+    font-size: 16px;
+
+    letter-spacing: 2px;
+
+    color: #aac7e5;
+
+    opacity: 0;
+
+    animation:
+        fadeUp 1s ease forwards;
+
+    animation-delay: 1.4s;
+
+}
+
+
+/* =====================================
+   CAR ORBIT
+===================================== */
+
+.orbit {
+
+    position: absolute;
+
+    width: 430px;
+    height: 300px;
+
+    border: 1px solid rgba(100,170,255,0.15);
+
+    border-radius: 50%;
+
+    transform:
+        rotate(-12deg);
+
+}
+
+
+/* Orbit glow */
+
+.orbit::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -15px;
+
+    border-radius: 50%;
+
+    border: 1px solid
+        rgba(70,160,255,0.08);
+
+}
+
+
+/* Car */
+
+.car {
+
+    position: absolute;
+
+    top: -27px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    font-size: 48px;
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(60,170,255,0.8)
+        );
+
+    animation:
+        orbitCar 4s
+        linear
+        infinite;
+
+}
+
+
+/* =====================================
+   LOADING
+===================================== */
+
+.loading-container {
+
+    position: absolute;
+
+    bottom: 55px;
+
+    width: 220px;
+
+    text-align: center;
+
+    z-index: 10;
+
+    opacity: 0;
+
+    animation:
+        fadeIn 1s ease forwards;
+
+    animation-delay: 1.8s;
+
+}
+
+
+.loading-bar {
+
+    width: 100%;
+
+    height: 3px;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+.loading-progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2587ff,
+            #42d7ff
+        );
+
+    animation:
+        loading 3.5s
+        ease-in-out
+        forwards;
+
+}
+
+
+.loading-container p {
+
+    margin-top: 12px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #7695b5;
+
+}
+
+
+/* =====================================
+   ANIMATIONS
+===================================== */
+
+@keyframes orbitCar {
+
+    0% {
+
+        transform:
+            translateX(-50%)
+            rotate(0deg);
+
+    }
+
+    25% {
+
+        transform:
+            translateX(-50%)
+            rotate(90deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateX(-50%)
+            rotate(180deg);
+
+    }
+
+    75% {
+
+        transform:
+            translateX(-50%)
+            rotate(270deg);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(-50%)
+            rotate(360deg);
+
+    }
+
+}
+
+
+@keyframes logoAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.7);
+
+        filter:
+            blur(10px);
+
+    }
+
+    70% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.05);
+
+        filter:
+            blur(0);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+@keyframes loading {
+
+    from {
+
+        width: 0%;
+
+    }
+
+    to {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .roadly-container {
+
+        width: 100%;
+
+        height: 350px;
+
+    }
+
+    .brand h1 {
+
+        font-size: 52px;
+
+        letter-spacing: 5px;
+
+    }
+
+    .tagline {
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+    }
+
+    .subtitle {
+
+        font-size: 13px;
+
+    }
+
+    .orbit {
+
+        width: 300px;
+
+        height: 230px;
+
+    }
+
+    .car {
+
+        font-size: 38px;
+
+    }
+
+}
