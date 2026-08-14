@@ -295,3 +295,260 @@ footer p{
     margin-top:10px;
 
 }
+/* =========================================================
+   📱 ROADLY 2.0
+   GLOBAL RESPONSIVE DESIGN
+   ========================================================= */
+
+
+/* =========================================================
+   TABLET — 1024px
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .container {
+        width: 92%;
+    }
+
+    section {
+        padding: 85px 0;
+    }
+
+    h1 {
+        font-size: 58px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    h3 {
+        font-size: 23px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        padding: 15px 32px;
+    }
+
+}
+
+
+/* =========================================================
+   📱 MOBILE — 768px
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+        width: calc(100% - 30px);
+        max-width: none;
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section {
+        padding: 65px 0;
+    }
+
+
+    /* =========================
+       HEADINGS
+    ========================= */
+
+    h1 {
+        font-size: clamp(38px, 10vw, 55px);
+        line-height: 1.12;
+    }
+
+    h2 {
+        font-size: clamp(28px, 7vw, 40px);
+        line-height: 1.2;
+
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 21px;
+        line-height: 1.3;
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .primary-btn,
+    .secondary-btn {
+
+        width: auto;
+
+        min-height: 48px;
+
+        padding: 13px 25px;
+
+        font-size: 14px;
+
+        border-radius: 40px;
+
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+        transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       FORMS
+    ========================= */
+
+    input {
+
+        width: 100%;
+
+        padding: 14px 16px;
+
+        font-size: 15px;
+
+        border-radius: 12px;
+
+    }
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+        border-radius: 15px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        padding: 60px 20px;
+    }
+
+    footer p {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   📱 SMALL PHONES — 480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+        width: calc(100% - 24px);
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section {
+        padding: 55px 0;
+    }
+
+
+    /* =========================
+       TYPOGRAPHY
+    ========================= */
+
+    h1 {
+        font-size: 38px;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    h3 {
+        font-size: 19px;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .primary-btn,
+    .secondary-btn {
+
+        width: 100%;
+
+        padding: 12px 18px;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =========================
+       INPUTS
+    ========================= */
+
+    input {
+        padding: 13px 14px;
+        font-size: 14px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        padding: 50px 15px;
+    }
+
+}

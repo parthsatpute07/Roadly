@@ -388,3 +388,380 @@
     color:#2563EB;
 
 }
+/* =========================================================
+   📱 ROADLY HERO — RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* ===========================
+       HERO
+    =========================== */
+
+    .hero {
+        min-height: 100svh;
+        height: auto;
+
+        padding: 110px 18px 0;
+
+        overflow: hidden;
+    }
+
+
+    /* ===========================
+       HERO CONTENT
+    =========================== */
+
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 15px;
+
+        margin-bottom: 100px;
+    }
+
+    .hero h1 {
+        font-size: clamp(40px, 11vw, 60px);
+
+        line-height: 1.08;
+
+        margin: 0;
+    }
+
+    .hero h1 span {
+        margin-top: 5px;
+    }
+
+    .hero p {
+        margin: 22px auto;
+
+        max-width: 550px;
+
+        font-size: 16px;
+
+        line-height: 1.6;
+    }
+
+
+    /* ===========================
+       HERO BUTTONS
+    =========================== */
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: 100%;
+
+        max-width: 320px;
+
+        margin: 28px auto 0;
+
+        gap: 12px;
+    }
+
+    .hero-buttons button,
+    .hero-buttons a {
+        width: 100%;
+
+        padding: 13px 20px;
+
+        font-size: 14px;
+
+        text-align: center;
+    }
+
+
+    /* ===========================
+       SUN
+    =========================== */
+
+    .sun {
+        width: 75px;
+        height: 75px;
+
+        top: 95px;
+
+        right: 25px;
+
+        box-shadow:
+            0 0 45px #FFD54A,
+            0 0 80px rgba(255,213,74,.35);
+    }
+
+
+    /* ===========================
+       CLOUDS
+    =========================== */
+
+    .cloud1 {
+        width: 110px;
+        height: 38px;
+
+        top: 145px;
+        left: -20px;
+    }
+
+    .cloud1::before {
+        width: 48px;
+        height: 48px;
+
+        left: 15px;
+        top: -20px;
+    }
+
+    .cloud1::after {
+        width: 42px;
+        height: 42px;
+
+        right: 15px;
+        top: -15px;
+    }
+
+
+    .cloud2 {
+        width: 120px;
+        height: 40px;
+
+        top: 210px;
+        right: -25px;
+    }
+
+    .cloud2::before {
+        width: 55px;
+        height: 55px;
+
+        left: 18px;
+        top: -24px;
+    }
+
+    .cloud2::after {
+        width: 48px;
+        height: 48px;
+
+        right: 18px;
+        top: -18px;
+    }
+
+
+    .cloud3 {
+        width: 90px;
+        height: 30px;
+
+        top: 105px;
+        left: 45%;
+    }
+
+    .cloud3::before {
+        width: 38px;
+        height: 38px;
+
+        left: 12px;
+        top: -16px;
+    }
+
+    .cloud3::after {
+        width: 34px;
+        height: 34px;
+
+        right: 12px;
+        top: -12px;
+    }
+
+
+    /* ===========================
+       MOUNTAINS
+    =========================== */
+
+    .mountains {
+        bottom: 85px;
+
+        height: 150px;
+
+        clip-path: polygon(
+            0 100%,
+            0 65%,
+            12% 48%,
+            25% 70%,
+            38% 30%,
+            50% 70%,
+            63% 42%,
+            76% 75%,
+            88% 38%,
+            100% 65%,
+            100% 100%
+        );
+    }
+
+
+    /* ===========================
+       ROAD
+    =========================== */
+
+    .road {
+        height: 85px;
+    }
+
+    .road-line {
+        height: 5px;
+
+        background:
+            repeating-linear-gradient(
+                to right,
+                transparent 0px,
+                transparent 35px,
+                white 35px,
+                white 70px
+            );
+    }
+
+
+    /* ===========================
+       CAR
+    =========================== */
+
+    .car {
+        bottom: 30px;
+
+        left: -80px;
+
+        font-size: 48px;
+    }
+
+
+    /* ===========================
+       SCROLL INDICATOR
+    =========================== */
+
+    .scroll-indicator {
+        bottom: 15px;
+
+        font-size: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   📱 SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .hero {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .hero-content {
+        padding: 10px;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+
+        line-height: 1.08;
+    }
+
+    .hero p {
+        font-size: 14px;
+
+        line-height: 1.55;
+
+        margin: 18px auto;
+    }
+
+    .hero-buttons {
+        max-width: 280px;
+
+        margin-top: 22px;
+    }
+
+    .hero-buttons button,
+    .hero-buttons a {
+        padding: 12px 15px;
+
+        font-size: 13px;
+    }
+
+
+    /* SUN */
+
+    .sun {
+        width: 60px;
+        height: 60px;
+
+        top: 90px;
+        right: 18px;
+    }
+
+
+    /* CLOUDS */
+
+    .cloud1 {
+        top: 135px;
+
+        left: -45px;
+
+        transform: scale(.8);
+    }
+
+    .cloud2 {
+        top: 195px;
+
+        right: -45px;
+
+        transform: scale(.8);
+    }
+
+    .cloud3 {
+        top: 100px;
+
+        left: 40%;
+
+        transform: scale(.7);
+    }
+
+
+    /* MOUNTAINS */
+
+    .mountains {
+        bottom: 65px;
+
+        height: 120px;
+    }
+
+
+    /* ROAD */
+
+    .road {
+        height: 65px;
+    }
+
+    .road-line {
+        top: 45%;
+
+        height: 4px;
+    }
+
+
+    /* CAR */
+
+    .car {
+        bottom: 22px;
+
+        font-size: 40px;
+    }
+
+
+    /* SCROLL */
+
+    .scroll-indicator {
+        bottom: 8px;
+
+        font-size: 18px;
+    }
+
+}

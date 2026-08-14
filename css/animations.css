@@ -364,3 +364,140 @@
     }
 
 }
+/* =========================================================
+   📱 ROADLY ANIMATIONS — MOBILE OPTIMIZATION
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* ---------------------------------
+       HERO BUTTONS
+    --------------------------------- */
+
+    .hero-buttons {
+        animation: floatButtonsMobile 5s ease-in-out infinite;
+    }
+
+
+    /* ---------------------------------
+       HERO CONTENT
+    --------------------------------- */
+
+    .hero-content {
+        animation-duration: .9s;
+    }
+
+    .hero h1 {
+        animation-duration: .8s;
+    }
+
+    .hero p {
+        animation-duration: 1s;
+    }
+
+
+    /* ---------------------------------
+       CLOUDS
+    --------------------------------- */
+
+    .cloud1 {
+        animation-duration: 55s;
+    }
+
+    .cloud2 {
+        animation-duration: 70s;
+    }
+
+    .cloud3 {
+        animation-duration: 45s;
+    }
+
+
+    /* ---------------------------------
+       SUN
+    --------------------------------- */
+
+    .sun {
+        animation-duration: 5s;
+    }
+
+
+    /* ---------------------------------
+       CAR
+    --------------------------------- */
+
+    .car {
+        animation-duration: 14s;
+    }
+
+}
+
+
+/* =========================================================
+   📱 SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .hero-buttons {
+        animation: none;
+    }
+
+    .cloud1 {
+        animation-duration: 65s;
+    }
+
+    .cloud2 {
+        animation-duration: 80s;
+    }
+
+    .cloud3 {
+        animation-duration: 55s;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE BUTTON FLOAT
+   ========================================================= */
+
+@keyframes floatButtonsMobile {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   Disable heavy animations when requested by the device.
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+
+    }
+
+}
