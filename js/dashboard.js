@@ -89,6 +89,40 @@ L.tileLayer(
 
 loadDashboard();
 
+// ----------------------------------
+// WEATHER
+// ----------------------------------
+
+try {
+
+    const weatherResponse = await fetch(
+        `/api/weather?lat=${encodeURIComponent(destination.lat)}` +
+        `&lon=${encodeURIComponent(destination.lon)}`
+    );
+
+    const weatherData =
+        await weatherResponse.json();
+
+    if (!weatherResponse.ok) {
+        throw new Error(
+            weatherData.error || "Weather request failed."
+        );
+    }
+
+    displayWeather(weatherData);
+
+} catch (error) {
+
+    console.error(
+        "Weather error:",
+        error
+    );
+
+    setText(
+        "weatherCondition",
+        "Weather unavailable"
+    );
+}
 
 // ======================================
 // LOAD EVERYTHING
@@ -102,10 +136,22 @@ async function loadDashboard() {
         // ROUTE
         // ----------------------------------
 
-        const route = await getRoute(
-            start,
-            destination
+        const routeResponse = await fetch(
+    `/api/route?startLon=${encodeURIComponent(start.lon)}` +
+    `&startLat=${encodeURIComponent(start.lat)}` +
+    `&endLon=${encodeURIComponent(destination.lon)}` +
+    `&endLat=${encodeURIComponent(destination.lat)}`
+    );
+
+        const routeData = await routeResponse.json();
+
+        if (!routeResponse.ok) {
+        throw new Error(
+        routeData.error || "Route calculation failed."
         );
+        }
+
+        const route = routeData;
 
         const totalBudget = drawRoute(route);
 
@@ -516,10 +562,10 @@ setText(
     const hotel =
     days * 2500;
 
-const food =
+    const food =
     days * 1200;
 
-const total =
+    const total =
     hotel + food + travelCost;
 
 
@@ -772,3 +818,187 @@ setInterval(
     updateGreeting,
     60000
 );
+// ======================================
+// WEATHER DISPLAY
+// ======================================
+
+function displayWeather(data) {
+
+    if (!data || !data.current) {
+        return;
+    }
+
+    const current =
+        data.current;
+
+    const temperature =
+        Math.round(current.temperature_2m);
+
+    const humidity =
+        current.relative_humidity_2m;
+
+    const wind =
+        Math.round(current.wind_speed_10m);
+
+    const weatherCode =
+        current.weather_code;
+
+    const weatherInfo =
+        getWeatherInfo(weatherCode);
+
+    setText(
+        "weatherTemp",
+        `${temperature}°C`
+    );
+
+    setText(
+        "temperature",
+        `${temperature}°C`
+    );
+
+    setText(
+        "weatherCondition",
+        weatherInfo.description
+    );
+
+    setText(
+        "weatherDescription",
+        weatherInfo.description
+    );
+
+    setText(
+        "weatherIcon",
+        weatherInfo.icon
+    );
+
+    setText(
+        "weatherEmoji",
+        weatherInfo.icon
+    );
+
+    setText(
+        "humidity",
+        `${humidity}%`
+    );
+
+    setText(
+        "weatherHumidity",
+        `${humidity}%`
+    );
+
+    setText(
+        "wind",
+        `${wind} km/h`
+    );
+
+    setText(
+        "windSpeed",
+        `${wind} km/h`
+    );
+
+    if (
+        data.daily &&
+        data.daily.sunrise &&
+        data.daily.sunset
+    ) {
+
+        setText(
+            "sunrise",
+            formatWeatherTime(
+                data.daily.sunrise[0]
+            )
+        );
+
+        setText(
+            "sunset",
+            formatWeatherTime(
+                data.daily.sunset[0]
+            )
+        );
+    }
+}
+// ======================================
+// WEATHER CODES
+// ======================================
+
+function getWeatherInfo(code) {
+
+    if (code === 0)
+        return {
+            icon: "☀️",
+            description: "Clear sky"
+        };
+
+    if (code === 1 || code === 2)
+        return {
+            icon: "🌤️",
+            description: "Partly cloudy"
+        };
+
+    if (code === 3)
+        return {
+            icon: "☁️",
+            description: "Cloudy"
+        };
+
+    if (code === 45 || code === 48)
+        return {
+            icon: "🌫️",
+            description: "Foggy"
+        };
+
+    if (code >= 51 && code <= 57)
+        return {
+            icon: "🌦️",
+            description: "Drizzle"
+        };
+
+    if (code >= 61 && code <= 67)
+        return {
+            icon: "🌧️",
+            description: "Rain"
+        };
+
+    if (code >= 71 && code <= 77)
+        return {
+            icon: "❄️",
+            description: "Snow"
+        };
+
+    if (code >= 80 && code <= 82)
+        return {
+            icon: "🌦️",
+            description: "Rain showers"
+        };
+
+    if (code >= 85 && code <= 86)
+        return {
+            icon: "🌨️",
+            description: "Snow showers"
+        };
+
+    if (code >= 95 && code <= 99)
+        return {
+            icon: "⛈️",
+            description: "Thunderstorm"
+        };
+
+    return {
+        icon: "🌤️",
+        description: "Weather"
+    };
+}
+
+
+// ======================================
+// WEATHER TIME
+// ======================================
+
+function formatWeatherTime(dateString) {
+
+    return new Date(dateString)
+        .toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit"
+        });
+}

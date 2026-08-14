@@ -12,25 +12,32 @@ let destinationLocation = null;
 
 async function searchPlace(query) {
 
-    if (!query || query.trim().length < 3) {
+    if (query.length < 3) {
         return [];
     }
 
-    const url =
-        `https://api.geoapify.com/v1/geocode/autocomplete` +
-        `?text=${encodeURIComponent(query.trim())}` +
-        `&limit=5` +
-        `&apiKey=${CONFIG.GEOAPIFY_API_KEY}`;
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-        throw new Error("Location search failed.");
-    }
+    const response = await fetch(
+        `/api/geocode?text=${encodeURIComponent(query)}`
+    );
 
     const data = await response.json();
 
+    if (!response.ok) {
+
+        console.error(
+            "Location search failed:",
+            data
+        );
+
+        throw new Error(
+            data.error ||
+            "Location search failed."
+        );
+
+    }
+
     return data.features || [];
+
 }
 
 
