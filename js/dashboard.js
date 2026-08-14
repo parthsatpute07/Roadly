@@ -362,16 +362,20 @@ function drawRoute(route) {
     // ROUTE SUMMARY
     // ----------------------------------
 
-    const summary =
-        route.properties.summary;
+    const segment =
+    route.properties?.segments?.[0];
 
+    if (!segment) {
+    throw new Error(
+        "Route summary data is missing."
+    );
+    }
 
     const distance =
-        summary.distance / 1000;
-
+    segment.distance / 1000;
 
     const duration =
-        summary.duration / 3600;
+    segment.duration / 3600;
 
 
     const distanceText =
