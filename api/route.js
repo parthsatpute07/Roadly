@@ -1,11 +1,5 @@
-// ======================================
-// ROADLY ROUTE API
-// ======================================
-
 export default async function handler(req, res) {
-
     try {
-
         const {
             startLon,
             startLat,
@@ -14,10 +8,10 @@ export default async function handler(req, res) {
         } = req.query;
 
         if (
-            startLon === undefined ||
-            startLat === undefined ||
-            endLon === undefined ||
-            endLat === undefined
+            !startLon ||
+            !startLat ||
+            !endLon ||
+            !endLat
         ) {
             return res.status(400).json({
                 error: "Start and destination coordinates are required."
@@ -34,8 +28,19 @@ export default async function handler(req, res) {
             });
         }
 
+        const coordinates = [
+            [
+                Number(startLon),
+                Number(startLat)
+            ],
+            [
+                Number(endLon),
+                Number(endLat)
+            ]
+        ];
+
         const response = await fetch(
-            "https://api.openrouteservice.org/v2/directions/driving-car",
+            "https://api.openrouteservice.org/v2/directions/driving-car/geojson",
             {
                 method: "POST",
 
@@ -45,26 +50,18 @@ export default async function handler(req, res) {
                 },
 
                 body: JSON.stringify({
-                    coordinates: [
-                        [
-                            Number(startLon),
-                            Number(startLat)
-                        ],
-                        [
-                            Number(endLon),
-                            Number(endLat)
-                        ]
-                    ]
+                    coordinates
                 })
             }
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok) {
 
             console.error(
-                "OpenRouteService error:",
+                "OpenRouteService:",
                 data
             );
 
@@ -72,7 +69,7 @@ export default async function handler(req, res) {
                 error:
                     data.error?.message ||
                     data.message ||
-                    "OpenRouteService request failed."
+                    "Unable to calculate route."
             });
         }
 
@@ -81,7 +78,7 @@ export default async function handler(req, res) {
     } catch (error) {
 
         console.error(
-            "Route API error:",
+            "Route API:",
             error
         );
 

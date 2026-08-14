@@ -1,12 +1,4 @@
-// ======================================
-// ROADLY ROUTE SERVICE
-// ======================================
-
 async function getRoute(start, destination) {
-
-    if (!start || !destination) {
-        throw new Error("Start or destination is missing.");
-    }
 
     const params = new URLSearchParams({
         startLon: start.lon,
