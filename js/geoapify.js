@@ -2,99 +2,180 @@
 // ROADLY - GEOAPIFY SERVICE
 // =========================================
 
+// =========================================
 // Convert place name to coordinates
+// =========================================
+
 async function getCoordinates(placeName) {
 
-    const url =
-    `/api/geocode?text=${encodeURIComponent(placeName)}`;
-    const response = await fetch(url);
+    if (!placeName) {
+        throw new Error("Place name is required.");
+    }
+
+    const params = new URLSearchParams({
+        text: placeName,
+        limit: "5"
+    });
+
+    const response = await fetch(
+        `/api/geocode?${params.toString()}`
+    );
+
     const data = await response.json();
 
-    if (!data.features || data.features.length === 0) {
+    if (!response.ok) {
+        throw new Error(
+            data.error || "Location search failed."
+        );
+    }
+
+    if (
+        !data.features ||
+        data.features.length === 0
+    ) {
         return null;
     }
 
-    return {
-        lat: data.features[0].properties.lat,
-        lon: data.features[0].properties.lon
-    };
+    const properties =
+        data.features[0].properties;
 
+    return {
+        address:
+            properties.formatted ||
+            placeName,
+
+        lat: properties.lat,
+        lon: properties.lon
+    };
 }
 
+
+// =========================================
 // Get famous attractions near destination
+// =========================================
+
 async function getTopPlaces(lat, lon) {
 
-   const url =
-`https://api.geoapify.com/v2/places?categories=
-tourism.attraction,
-tourism.sights,
-entertainment,
-natural,
-catering.restaurant,
-leisure.park
-&filter=circle:${lon},${lat},30000
-&bias=proximity:${lon},${lat}
-&limit=20
+    if (
+        lat === undefined ||
+        lon === undefined
+    ) {
+        throw new Error(
+            "Destination coordinates are missing."
+        );
+    }
 
+    const params = new URLSearchParams({
+        lat: String(lat),
+        lon: String(lon)
+    });
 
-    const response = await fetch(url);
+    const response = await fetch(
+        `/api/places?${params.toString()}`
+    );
+
     const data = await response.json();
 
-    return data.features || [];
+    if (!response.ok) {
+        throw new Error(
+            data.error ||
+            "Failed to load attractions."
+        );
+    }
 
+    return data.features || [];
 }
+
+
 // =========================================
 // DISPLAY TOP PLACES
 // =========================================
 
 function renderPlaces(places) {
 
-    const container = document.getElementById("placesContainer");
+    const container =
+        document.getElementById(
+            "placesContainer"
+        );
+
+    if (!container) {
+        console.error(
+            "placesContainer not found."
+        );
+
+        return;
+    }
 
     container.innerHTML = "";
 
-    if (!places.length) {
+    if (
+        !places ||
+        places.length === 0
+    ) {
 
-        container.innerHTML = "<p>No attractions found nearby.</p>";
+        container.innerHTML =
+            "<p>No attractions found nearby.</p>";
 
         return;
-
     }
 
-    places.forEach(place => {
+    places
+        .slice(0, 8)
+        .forEach(place => {
 
-        const p = place.properties;
+            const p =
+                place.properties || {};
 
-        container.innerHTML += `
+            const name =
+                p.name ||
+                "Unnamed Place";
 
-        <div class="place-card">
+            const formatted =
+                p.formatted ||
+                "Tourist attraction";
 
-            <div class="place-content">
+            const category =
+                p.categories?.[0] ||
+                "Attraction";
 
-                <h3>${p.name || "Unnamed Place"}</h3>
+            const lat =
+                p.lat;
 
-                <p>${p.formatted || ""}</p>
+            const lon =
+                p.lon;
 
-                    <small>
-                    ${(p.categories?.[0] || "Attraction")
-                    .replaceAll(".", " ")
-                    .toUpperCase()}
-                    </small>
+            container.innerHTML += `
 
-                <br><br>
+                <div class="place-card">
 
-                <button onclick="focusPlace(${p.lat},${p.lon})">
+                    <div class="place-content">
 
-                    📍 View on Map
+                        <h3>
+                            ${name}
+                        </h3>
 
-                </button>
+                        <p>
+                            ${formatted}
+                        </p>
 
-            </div>
+                        <small>
+                            ${category
+                                .replaceAll(".", " ")
+                                .toUpperCase()}
+                        </small>
 
-        </div>
+                        <br><br>
 
-        `;
+                        <button
+                            onclick="focusPlace(${lat}, ${lon})"
+                        >
+                            📍 View on Map
+                        </button>
 
-    });
+                    </div>
 
+                </div>
+
+            `;
+        });
 }

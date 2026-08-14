@@ -12,6 +12,7 @@ export default async function handler(req, res) {
             lat === undefined ||
             lon === undefined
         ) {
+
             return res.status(400).json({
                 error:
                     "Latitude and longitude are required."
@@ -22,6 +23,7 @@ export default async function handler(req, res) {
             process.env.GEOAPIFY_API_KEY;
 
         if (!apiKey) {
+
             return res.status(500).json({
                 error:
                     "GEOAPIFY_API_KEY is not configured in Vercel."
@@ -39,8 +41,10 @@ export default async function handler(req, res) {
 
         const params = new URLSearchParams({
             categories,
-            filter: `circle:${lon},${lat},30000`,
-            bias: `proximity:${lon},${lat}`,
+            filter:
+                `circle:${lon},${lat},30000`,
+            bias:
+                `proximity:${lon},${lat}`,
             limit: "20",
             apiKey
         });
@@ -49,7 +53,8 @@ export default async function handler(req, res) {
             `https://api.geoapify.com/v2/places?${params.toString()}`
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok) {
 
@@ -58,10 +63,14 @@ export default async function handler(req, res) {
                 data
             );
 
-            return res.status(response.status).json({
+            return res.status(
+                response.status
+            ).json({
+
                 error:
                     data.message ||
                     "Failed to load attractions."
+
             });
         }
 
@@ -75,9 +84,11 @@ export default async function handler(req, res) {
         );
 
         return res.status(500).json({
+
             error:
                 error.message ||
                 "Internal places server error."
+
         });
     }
 }
