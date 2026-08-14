@@ -2,15 +2,9 @@
 // ROADLY DASHBOARD
 // ======================================
 
-// ---------- Load Trip ----------
-
 const start = JSON.parse(localStorage.getItem("start"));
 const destination = JSON.parse(localStorage.getItem("destination"));
 const days = Number(localStorage.getItem("days") || 1);
-
-// ======================================
-// TRAVEL MODE & TRAVELLERS
-// ======================================
 
 const travelMode =
     localStorage.getItem("travelMode") ||
@@ -18,55 +12,49 @@ const travelMode =
     "Car";
 
 const travellers =
-    JSON.parse(
-        localStorage.getItem("travellers") || "{}"
-    );
+    JSON.parse(localStorage.getItem("travellers") || "{}");
 
-const adults =
-    Number(travellers.adults || 0);
-
-const children =
-    Number(travellers.children || 0);
-
-const seniors =
-    Number(travellers.seniors || 0);
+const adults = Number(travellers.adults || 0);
+const children = Number(travellers.children || 0);
+const seniors = Number(travellers.seniors || 0);
 
 const totalTravellers =
-    adults + children + seniors;
+    adults + children + seniors || 1;
 
-// ---------- Check Trip ----------
+
+// ======================================
+// CHECK TRIP DATA
+// ======================================
 
 if (!start || !destination) {
-
     alert("Trip information is missing.");
-
     window.location.href = "trip.html";
-
     throw new Error("Trip information missing.");
-
 }
 
 
 // ======================================
-// UPDATE HEADER
+// HEADER
 // ======================================
 
-const startLocation = document.getElementById("startLocation");
+const startLocation =
+    document.getElementById("startLocation");
+
 const destinationLocation =
     document.getElementById("destinationLocation");
 
 if (startLocation) {
-    startLocation.textContent = `📍 ${start.address}`;
+    startLocation.textContent = `📍 ${start.address || "Starting Point"}`;
 }
 
 if (destinationLocation) {
     destinationLocation.textContent =
-        `📍 ${destination.address}`;
+        `📍 ${destination.address || "Destination"}`;
 }
 
 
 // ======================================
-// CREATE MAP
+// MAP
 // ======================================
 
 const map = L.map("map").setView(
@@ -84,51 +72,19 @@ L.tileLayer(
 
 
 // ======================================
-// START DASHBOARD
+// START
 // ======================================
 
 loadDashboard();
 
-// ----------------------------------
-// WEATHER
-// ----------------------------------
-
-try {
-
-    const weatherResponse = await fetch(
-        `/api/weather?lat=${encodeURIComponent(destination.lat)}` +
-        `&lon=${encodeURIComponent(destination.lon)}`
-    );
-
-    const weatherData =
-        await weatherResponse.json();
-
-    if (!weatherResponse.ok) {
-        throw new Error(
-            weatherData.error || "Weather request failed."
-        );
-    }
-
-    displayWeather(weatherData);
-
-} catch (error) {
-
-    console.error(
-        "Weather error:",
-        error
-    );
-
-    setText(
-        "weatherCondition",
-        "Weather unavailable"
-    );
-}
 
 // ======================================
-// LOAD EVERYTHING
+// LOAD DASHBOARD
 // ======================================
 
 async function loadDashboard() {
+
+    console.log("Roadly dashboard started.");
 
     try {
 
@@ -136,40 +92,70 @@ async function loadDashboard() {
         // ROUTE
         // ----------------------------------
 
-        const routeResponse = await fetch(
-    `/api/route?startLon=${encodeURIComponent(start.lon)}` +
-    `&startLat=${encodeURIComponent(start.lat)}` +
-    `&endLon=${encodeURIComponent(destination.lon)}` +
-    `&endLat=${encodeURIComponent(destination.lat)}`
-    );
+        const routeUrl =
+            `/api/route` +
+            `?startLon=${encodeURIComponent(start.lon)}` +
+            `&startLat=${encodeURIComponent(start.lat)}` +
+            `&endLon=${encodeURIComponent(destination.lon)}` +
+            `&endLat=${encodeURIComponent(destination.lat)}`;
 
-        const routeData = await routeResponse.json();
+        console.log("Route URL:", routeUrl);
+
+        const routeResponse =
+            await fetch(routeUrl);
+
+        const routeData =
+            await routeResponse.json();
+
+        console.log("Route response:", routeData);
 
         if (!routeResponse.ok) {
-        throw new Error(
-        routeData.error || "Route calculation failed."
-        );
+            throw new Error(
+                routeData.error ||
+                "Route calculation failed."
+            );
         }
 
-        const route = routeData;
+        const route =
+            routeData.features?.[0] || routeData;
 
-        const totalBudget = drawRoute(route);
+        if (!route || !route.geometry) {
+            throw new Error(
+                "Invalid route data received."
+            );
+        }
+
+        const totalBudget =
+            drawRoute(route);
 
 
         // ----------------------------------
-        // TOP ATTRACTIONS
+        // WEATHER
+        // ----------------------------------
+
+        await loadWeather();
+
+
+        // ----------------------------------
+        // ATTRACTIONS
         // ----------------------------------
 
         try {
 
-            const places = await getTopPlaces(
-                destination.lat,
-                destination.lon
+            const places =
+                await getTopPlaces(
+                    destination.lat,
+                    destination.lon
+                );
+
+            console.log(
+                "Attractions:",
+                places
             );
 
-            console.log("TOP PLACES:", places);
-
-            renderPlaces(places);
+            renderPlaces(
+                places || []
+            );
 
         } catch (error) {
 
@@ -187,75 +173,24 @@ async function loadDashboard() {
 
                 container.innerHTML = `
                     <div class="empty-message">
-                        <p>Unable to load attractions.</p>
-                    </div>
-                `;
-
-            }
-
-        }
-
-
-        // ----------------------------------
-        // AI ITINERARY
-        // ----------------------------------
-
-        const aiPlan =
-            document.getElementById("aiPlan");
-
-        if (aiPlan) {
-
-            aiPlan.innerHTML = `
-                <div class="ai-loading">
-                    🤖 Creating your personalized itinerary...
-                </div>
-            `;
-
-        }
-
-
-        try {
-
-            const plan =
-                await generateItinerary(
-                    start.address,
-                    destination.address,
-                    days,
-                    totalBudget,
-                    "Sightseeing, Food, Nature"
-                );
-
-            if (aiPlan) {
-
-                aiPlan.innerHTML = plan;
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "AI itinerary error:",
-                error
-            );
-
-            if (aiPlan) {
-
-                aiPlan.innerHTML = `
-                    <div class="ai-error">
-                        <h3>🤖 AI Planner</h3>
                         <p>
-                            We couldn't generate your itinerary
-                            right now.
+                            Unable to load attractions.
                         </p>
-                        <small>
-                            ${error.message}
-                        </small>
                     </div>
                 `;
 
             }
 
         }
+
+
+        // ----------------------------------
+        // AI
+        // ----------------------------------
+
+        await loadAI(
+            totalBudget
+        );
 
     } catch (error) {
 
@@ -265,7 +200,8 @@ async function loadDashboard() {
         );
 
         alert(
-            "Unable to load your road trip. Please try again."
+            "Unable to load your road trip: " +
+            error.message
         );
 
     }
@@ -279,32 +215,31 @@ async function loadDashboard() {
 
 function drawRoute(route) {
 
-    if (!route) {
+    const coordinates =
+        route.geometry.coordinates;
 
+    if (
+        !coordinates ||
+        coordinates.length === 0
+    ) {
         throw new Error(
-            "Route data is missing."
+            "Route coordinates are missing."
         );
-
     }
 
 
     // ----------------------------------
-    // ROUTE COORDINATES
+    // ROUTE LINE
     // ----------------------------------
-
-    const coordinates =
-        route.geometry.coordinates;
 
     const latLngs =
-        coordinates.map(point => [
-            point[1],
-            point[0]
-        ]);
+        coordinates.map(
+            point => [
+                point[1],
+                point[0]
+            ]
+        );
 
-
-    // ----------------------------------
-    // DRAW ROUTE
-    // ----------------------------------
 
     L.polyline(
         latLngs,
@@ -327,7 +262,7 @@ function drawRoute(route) {
         .addTo(map)
         .bindPopup(`
             <strong>Starting Point</strong><br>
-            ${start.address}
+            ${start.address || ""}
         `);
 
 
@@ -342,7 +277,7 @@ function drawRoute(route) {
         .addTo(map)
         .bindPopup(`
             <strong>Destination</strong><br>
-            ${destination.address}
+            ${destination.address || ""}
         `);
 
 
@@ -358,37 +293,59 @@ function drawRoute(route) {
     );
 
 
-    // ----------------------------------
-    // ROUTE SUMMARY
-    // ----------------------------------
+    // ==================================
+    // ROUTE DETAILS
+    // ==================================
+
+    const properties =
+        route.properties || {};
+
+    const summary =
+        properties.summary || {};
 
     const segment =
-    route.properties?.segments?.[0];
+        properties.segments?.[0];
 
-    if (!segment) {
-    throw new Error(
-        "Route summary data is missing."
-    );
+
+    let distance = 0;
+    let duration = 0;
+
+
+    if (summary.distance) {
+
+        distance =
+            summary.distance / 1000;
+
+        duration =
+            summary.duration / 3600;
+
+    } else if (segment) {
+
+        distance =
+            segment.distance / 1000;
+
+        duration =
+            segment.duration / 3600;
+
+    } else {
+
+        throw new Error(
+            "Route distance information is missing."
+        );
+
     }
-
-    const distance =
-    segment.distance / 1000;
-
-    const duration =
-    segment.duration / 3600;
 
 
     const distanceText =
         distance.toFixed(1) + " km";
 
-
     const durationText =
         duration.toFixed(1) + " hrs";
 
 
-    // ----------------------------------
-    // DASHBOARD CARDS
-    // ----------------------------------
+    // ==================================
+    // UPDATE CARDS
+    // ==================================
 
     setText(
         "distance",
@@ -411,172 +368,160 @@ function drawRoute(route) {
     );
 
 
-    // ======================================
-// TRAVEL COST
-// ======================================
+    // ==================================
+    // TRAVEL COST
+    // ==================================
 
-let travelCost = 0;
+    let travelCost = 0;
+    let costLabel = "⛽ Fuel Cost";
 
-let costLabel = "";
+
+    if (travelMode === "Car") {
+
+        const mileage = 15;
+        const fuelPrice = 105;
+
+        travelCost =
+            Math.round(
+                (distance / mileage) *
+                fuelPrice
+            );
+
+        costLabel =
+            "⛽ Fuel Cost";
+
+    }
+
+    else if (travelMode === "Bike") {
+
+        const mileage = 40;
+        const fuelPrice = 105;
+
+        travelCost =
+            Math.round(
+                (distance / mileage) *
+                fuelPrice
+            );
+
+        costLabel =
+            "⛽ Fuel Cost";
+
+    }
+
+    else if (travelMode === "Bus") {
+
+        const pricePerKm = 1.2;
+
+        travelCost =
+            Math.round(
+                distance *
+                pricePerKm *
+                totalTravellers
+            );
+
+        costLabel =
+            "🎫 Ticket Price";
+
+    }
+
+    else if (travelMode === "Train") {
+
+        const pricePerKm = 1.5;
+
+        travelCost =
+            Math.round(
+                distance *
+                pricePerKm *
+                totalTravellers
+            );
+
+        costLabel =
+            "🎫 Ticket Price";
+
+    }
+
+    else if (travelMode === "Flight") {
+
+        const pricePerKm = 5;
+
+        travelCost =
+            Math.round(
+                distance *
+                pricePerKm *
+                totalTravellers
+            );
+
+        costLabel =
+            "🎫 Ticket Price";
+
+    }
 
 
-// --------------------------------------
-// CAR
-// --------------------------------------
+    // ==================================
+    // COST LABELS
+    // ==================================
 
-if (travelMode === "Car") {
+    const fuelCard =
+        document.querySelector(
+            ".summary-card:nth-child(3) h3"
+        );
 
-    const mileage = 15;
-    const fuelPrice = 105;
+    if (fuelCard) {
+        fuelCard.textContent =
+            costLabel;
+    }
 
-    travelCost = Math.round(
-        (distance / mileage) * fuelPrice
+
+    const routeFuelCard =
+        document.querySelector(
+            ".route-box:nth-child(3) h4"
+        );
+
+    if (routeFuelCard) {
+        routeFuelCard.textContent =
+            costLabel;
+    }
+
+
+    // ==================================
+    // COST
+    // ==================================
+
+    const costText =
+        "₹ " +
+        travelCost.toLocaleString("en-IN");
+
+    setText(
+        "fuelCost",
+        costText
     );
 
-    costLabel = "⛽ Fuel Cost";
-
-}
-
-
-// --------------------------------------
-// BIKE
-// --------------------------------------
-
-else if (travelMode === "Bike") {
-
-    const mileage = 40;
-    const fuelPrice = 105;
-
-    travelCost = Math.round(
-        (distance / mileage) * fuelPrice
+    setText(
+        "routeFuel",
+        costText
     );
 
-    costLabel = "⛽ Fuel Cost";
 
-}
+    // ==================================
+    // TOTAL BUDGET
+    // ==================================
 
+    const hotelCost =
+        days * 2500;
 
-// --------------------------------------
-// BUS
-// --------------------------------------
+    const foodCost =
+        days * 1200;
 
-else if (travelMode === "Bus") {
-
-    const pricePerKm = 1.20;
-
-    travelCost = Math.round(
-        distance *
-        pricePerKm *
-        totalTravellers
-    );
-
-    costLabel = "🎫 Ticket Price";
-
-}
-
-
-// --------------------------------------
-// TRAIN
-// --------------------------------------
-
-else if (travelMode === "Train") {
-
-    const pricePerKm = 1.50;
-
-    travelCost = Math.round(
-        distance *
-        pricePerKm *
-        totalTravellers
-    );
-
-    costLabel = "🎫 Ticket Price";
-
-}
-
-
-// --------------------------------------
-// FLIGHT
-// --------------------------------------
-
-else if (travelMode === "Flight") {
-
-    const pricePerKm = 5;
-
-    travelCost = Math.round(
-        distance *
-        pricePerKm *
-        totalTravellers
-    );
-
-    costLabel = "🎫 Ticket Price";
-
-}
-
-
-// --------------------------------------
-// UPDATE DASHBOARD LABELS
-// --------------------------------------
-
-const fuelCard =
-    document.querySelector(
-        ".summary-card:nth-child(3) h3"
-    );
-
-if (fuelCard) {
-
-    fuelCard.textContent =
-        costLabel;
-
-}
-
-
-const routeFuelCard =
-    document.querySelector(
-        ".route-box:nth-child(3) h4"
-    );
-
-if (routeFuelCard) {
-
-    routeFuelCard.textContent =
-        costLabel;
-
-}
-
-
-// --------------------------------------
-// UPDATE COST
-// --------------------------------------
-
-setText(
-    "fuelCost",
-    "₹ " +
-    travelCost.toLocaleString("en-IN")
-);
-
-setText(
-    "routeFuel",
-    "₹ " +
-    travelCost.toLocaleString("en-IN")
-);
-
-    // ----------------------------------
-    // BUDGET
-    // ----------------------------------
-
-    const hotel =
-    days * 2500;
-
-    const food =
-    days * 1200;
-
-    const total =
-    hotel + food + travelCost;
+    const totalBudget =
+        hotelCost +
+        foodCost +
+        travelCost;
 
 
     setText(
         "budget",
         "₹ " +
-        total.toLocaleString("en-IN")
+        totalBudget.toLocaleString("en-IN")
     );
 
 
@@ -586,13 +531,371 @@ setText(
     );
 
 
-    return total;
+    return totalBudget;
 
 }
 
 
 // ======================================
-// HELPER
+// WEATHER
+// ======================================
+
+async function loadWeather() {
+
+    try {
+
+        const url =
+            `/api/weather` +
+            `?lat=${encodeURIComponent(destination.lat)}` +
+            `&lon=${encodeURIComponent(destination.lon)}`;
+
+        console.log(
+            "Weather URL:",
+            url
+        );
+
+        const response =
+            await fetch(url);
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Weather:",
+            data
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "Weather request failed."
+            );
+        }
+
+        displayWeather(data);
+
+    } catch (error) {
+
+        console.error(
+            "Weather error:",
+            error
+        );
+
+        setText(
+            "weatherTemp",
+            "--°C"
+        );
+
+        setText(
+            "weatherCondition",
+            "Weather unavailable"
+        );
+
+        setText(
+            "humidity",
+            "--"
+        );
+
+        setText(
+            "wind",
+            "--"
+        );
+
+    }
+
+}
+
+
+// ======================================
+// DISPLAY WEATHER
+// ======================================
+
+function displayWeather(data) {
+
+    if (!data) {
+        return;
+    }
+
+
+    // Supports Open-Meteo format
+    if (data.current) {
+
+        const current =
+            data.current;
+
+
+        const temperature =
+            current.temperature_2m;
+
+        const humidity =
+            current.relative_humidity_2m;
+
+        const wind =
+            current.wind_speed_10m;
+
+        const code =
+            current.weather_code;
+
+
+        const info =
+            getWeatherInfo(code);
+
+
+        setText(
+            "weatherTemp",
+            Math.round(temperature) + "°C"
+        );
+
+        setText(
+            "weatherCondition",
+            info.description
+        );
+
+        setText(
+            "weatherIcon",
+            info.icon
+        );
+
+        setText(
+            "humidity",
+            humidity + "%"
+        );
+
+        setText(
+            "wind",
+            Math.round(wind) + " km/h"
+        );
+
+
+        if (
+            data.daily &&
+            data.daily.sunrise &&
+            data.daily.sunset
+        ) {
+
+            setText(
+                "sunrise",
+                formatWeatherTime(
+                    data.daily.sunrise[0]
+                )
+            );
+
+            setText(
+                "sunset",
+                formatWeatherTime(
+                    data.daily.sunset[0]
+                )
+            );
+
+        }
+
+    }
+
+}
+
+
+// ======================================
+// WEATHER INFO
+// ======================================
+
+function getWeatherInfo(code) {
+
+    if (code === 0) {
+
+        return {
+            icon: "☀️",
+            description: "Clear sky"
+        };
+
+    }
+
+    if (code === 1 || code === 2) {
+
+        return {
+            icon: "🌤️",
+            description: "Partly cloudy"
+        };
+
+    }
+
+    if (code === 3) {
+
+        return {
+            icon: "☁️",
+            description: "Cloudy"
+        };
+
+    }
+
+    if (code === 45 || code === 48) {
+
+        return {
+            icon: "🌫️",
+            description: "Foggy"
+        };
+
+    }
+
+    if (
+        code >= 51 &&
+        code <= 57
+    ) {
+
+        return {
+            icon: "🌦️",
+            description: "Drizzle"
+        };
+
+    }
+
+    if (
+        code >= 61 &&
+        code <= 67
+    ) {
+
+        return {
+            icon: "🌧️",
+            description: "Rain"
+        };
+
+    }
+
+    if (
+        code >= 71 &&
+        code <= 77
+    ) {
+
+        return {
+            icon: "❄️",
+            description: "Snow"
+        };
+
+    }
+
+    if (
+        code >= 80 &&
+        code <= 82
+    ) {
+
+        return {
+            icon: "🌦️",
+            description: "Rain showers"
+        };
+
+    }
+
+    if (
+        code >= 95 &&
+        code <= 99
+    ) {
+
+        return {
+            icon: "⛈️",
+            description: "Thunderstorm"
+        };
+
+    }
+
+
+    return {
+        icon: "🌤️",
+        description: "Weather"
+    };
+
+}
+
+
+// ======================================
+// WEATHER TIME
+// ======================================
+
+function formatWeatherTime(value) {
+
+    return new Date(value)
+        .toLocaleTimeString(
+            [],
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+
+}
+
+
+// ======================================
+// AI ITINERARY
+// ======================================
+
+async function loadAI(totalBudget) {
+
+    const aiPlan =
+        document.getElementById(
+            "aiPlan"
+        );
+
+    if (!aiPlan) {
+        return;
+    }
+
+
+    aiPlan.innerHTML = `
+        <div class="ai-loading">
+            🤖 Creating your personalized itinerary...
+        </div>
+    `;
+
+
+    try {
+
+        if (
+            typeof generateItinerary !==
+            "function"
+        ) {
+
+            throw new Error(
+                "AI planner is not available."
+            );
+
+        }
+
+
+        const plan =
+            await generateItinerary(
+                start.address,
+                destination.address,
+                days,
+                totalBudget,
+                "Sightseeing, Food, Nature"
+            );
+
+
+        aiPlan.innerHTML =
+            plan;
+
+    } catch (error) {
+
+        console.error(
+            "AI error:",
+            error
+        );
+
+        aiPlan.innerHTML = `
+            <div class="ai-error">
+                <h3>🤖 AI Planner</h3>
+                <p>
+                    AI itinerary is currently unavailable.
+                </p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+// ======================================
+// TEXT HELPER
 // ======================================
 
 function setText(id, value) {
@@ -602,7 +905,8 @@ function setText(id, value) {
 
     if (element) {
 
-        element.textContent = value;
+        element.textContent =
+            value;
 
     }
 
@@ -610,7 +914,7 @@ function setText(id, value) {
 
 
 // ======================================
-// RENDER TOP PLACES
+// RENDER PLACES
 // ======================================
 
 function renderPlaces(places) {
@@ -620,15 +924,8 @@ function renderPlaces(places) {
             "placesContainer"
         );
 
-
     if (!container) {
-
-        console.error(
-            "placesContainer not found."
-        );
-
         return;
-
     }
 
 
@@ -658,37 +955,39 @@ function renderPlaces(places) {
         .slice(0, 8)
         .forEach(place => {
 
-            const properties =
+            const p =
                 place.properties || {};
 
 
             const name =
-                properties.name ||
+                p.name ||
                 "Popular Attraction";
 
 
             const category =
-                properties.categories?.[0] ||
+                p.categories?.[0] ||
                 "Tourist Attraction";
 
 
             const lat =
-                properties.lat;
+                Number(p.lat);
 
 
             const lon =
-                properties.lon;
+                Number(p.lon);
 
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             card.className =
                 "place-card";
 
 
             card.innerHTML = `
-
                 <div class="place-icon">
                     📍
                 </div>
@@ -707,18 +1006,35 @@ function renderPlaces(places) {
 
                 <button
                     class="place-btn"
-                    onclick="focusPlace(
-                        ${lat},
-                        ${lon}
-                    )"
+                    type="button"
                 >
                     View
                 </button>
-
             `;
 
 
-            container.appendChild(card);
+            const button =
+                card.querySelector(
+                    ".place-btn"
+                );
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    focusPlace(
+                        lat,
+                        lon
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                card
+            );
 
         });
 
@@ -731,7 +1047,7 @@ function renderPlaces(places) {
 
 function formatCategory(category) {
 
-    return category
+    return String(category)
         .replaceAll(".", " ")
         .replaceAll("_", " ")
         .replace(
@@ -744,14 +1060,14 @@ function formatCategory(category) {
 
 
 // ======================================
-// FOCUS PLACE ON MAP
+// FOCUS PLACE
 // ======================================
 
 function focusPlace(lat, lon) {
 
     if (
-        typeof lat !== "number" ||
-        typeof lon !== "number"
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lon)
     ) {
 
         return;
@@ -776,233 +1092,78 @@ function focusPlace(lat, lon) {
         .openPopup();
 
 }
+
+
 // ======================================
-// DYNAMIC GREETING
+// GREETING
 // ======================================
 
 function updateGreeting() {
 
     const greeting =
-        document.getElementById("greeting");
+        document.getElementById(
+            "greeting"
+        );
 
-    if (!greeting) return;
+    if (!greeting) {
+        return;
+    }
+
 
     const hour =
         new Date().getHours();
 
+
     let message;
 
-    if (hour >= 5 && hour < 12) {
 
-        message = "Good Morning ☀️";
+    if (
+        hour >= 5 &&
+        hour < 12
+    ) {
 
-    } else if (hour >= 12 && hour < 17) {
-
-        message = "Good Afternoon 🌤️";
-
-    } else if (hour >= 17 && hour < 21) {
-
-        message = "Good Evening 🌆";
-
-    } else {
-
-        message = "Good Night 🌙";
+        message =
+            "Good Morning ☀️";
 
     }
 
-    greeting.textContent = message;
+    else if (
+        hour >= 12 &&
+        hour < 17
+    ) {
+
+        message =
+            "Good Afternoon 🌤️";
+
+    }
+
+    else if (
+        hour >= 17 &&
+        hour < 21
+    ) {
+
+        message =
+            "Good Evening 🌆";
+
+    }
+
+    else {
+
+        message =
+            "Good Night 🌙";
+
+    }
+
+
+    greeting.textContent =
+        message;
+
 }
 
 
-// Run immediately
 updateGreeting();
 
-// Update every minute
 setInterval(
     updateGreeting,
     60000
 );
-// ======================================
-// WEATHER DISPLAY
-// ======================================
-
-function displayWeather(data) {
-
-    if (!data || !data.current) {
-        return;
-    }
-
-    const current =
-        data.current;
-
-    const temperature =
-        Math.round(current.temperature_2m);
-
-    const humidity =
-        current.relative_humidity_2m;
-
-    const wind =
-        Math.round(current.wind_speed_10m);
-
-    const weatherCode =
-        current.weather_code;
-
-    const weatherInfo =
-        getWeatherInfo(weatherCode);
-
-    setText(
-        "weatherTemp",
-        `${temperature}°C`
-    );
-
-    setText(
-        "temperature",
-        `${temperature}°C`
-    );
-
-    setText(
-        "weatherCondition",
-        weatherInfo.description
-    );
-
-    setText(
-        "weatherDescription",
-        weatherInfo.description
-    );
-
-    setText(
-        "weatherIcon",
-        weatherInfo.icon
-    );
-
-    setText(
-        "weatherEmoji",
-        weatherInfo.icon
-    );
-
-    setText(
-        "humidity",
-        `${humidity}%`
-    );
-
-    setText(
-        "weatherHumidity",
-        `${humidity}%`
-    );
-
-    setText(
-        "wind",
-        `${wind} km/h`
-    );
-
-    setText(
-        "windSpeed",
-        `${wind} km/h`
-    );
-
-    if (
-        data.daily &&
-        data.daily.sunrise &&
-        data.daily.sunset
-    ) {
-
-        setText(
-            "sunrise",
-            formatWeatherTime(
-                data.daily.sunrise[0]
-            )
-        );
-
-        setText(
-            "sunset",
-            formatWeatherTime(
-                data.daily.sunset[0]
-            )
-        );
-    }
-}
-// ======================================
-// WEATHER CODES
-// ======================================
-
-function getWeatherInfo(code) {
-
-    if (code === 0)
-        return {
-            icon: "☀️",
-            description: "Clear sky"
-        };
-
-    if (code === 1 || code === 2)
-        return {
-            icon: "🌤️",
-            description: "Partly cloudy"
-        };
-
-    if (code === 3)
-        return {
-            icon: "☁️",
-            description: "Cloudy"
-        };
-
-    if (code === 45 || code === 48)
-        return {
-            icon: "🌫️",
-            description: "Foggy"
-        };
-
-    if (code >= 51 && code <= 57)
-        return {
-            icon: "🌦️",
-            description: "Drizzle"
-        };
-
-    if (code >= 61 && code <= 67)
-        return {
-            icon: "🌧️",
-            description: "Rain"
-        };
-
-    if (code >= 71 && code <= 77)
-        return {
-            icon: "❄️",
-            description: "Snow"
-        };
-
-    if (code >= 80 && code <= 82)
-        return {
-            icon: "🌦️",
-            description: "Rain showers"
-        };
-
-    if (code >= 85 && code <= 86)
-        return {
-            icon: "🌨️",
-            description: "Snow showers"
-        };
-
-    if (code >= 95 && code <= 99)
-        return {
-            icon: "⛈️",
-            description: "Thunderstorm"
-        };
-
-    return {
-        icon: "🌤️",
-        description: "Weather"
-    };
-}
-
-
-// ======================================
-// WEATHER TIME
-// ======================================
-
-function formatWeatherTime(dateString) {
-
-    return new Date(dateString)
-        .toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit"
-        });
-}
