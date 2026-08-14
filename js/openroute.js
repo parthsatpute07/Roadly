@@ -1,5 +1,5 @@
 // ======================================
-// ROADLY ROUTE
+// ROADLY ROUTE SERVICE
 // ======================================
 
 async function getRoute(start, destination) {
@@ -15,13 +15,16 @@ async function getRoute(start, destination) {
         endLat: destination.lat
     });
 
-    const response = await fetch(`/api/route?${params.toString()}`);
+    const response = await fetch(
+        `/api/route?${params.toString()}`
+    );
 
     const data = await response.json();
 
     if (!response.ok) {
         throw new Error(
-            data.error || "Route API request failed."
+            data.error ||
+            "Route API request failed."
         );
     }
 
