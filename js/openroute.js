@@ -1,16 +1,32 @@
-// ========================================
-// GET ROUTE DETAILS
-// ========================================
+// ======================================
+// ROADLY ROUTE SERVICE
+// ======================================
 
 async function getRoute(start, destination) {
 
+    if (!start || !destination) {
+        throw new Error("Start or destination is missing.");
+    }
+
     const url =
-`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${CONFIG.OPENROUTESERVICE_API_KEY}&start=${start.lon},${start.lat}&end=${destination.lon},${destination.lat}`;
+        `/api/route` +
+        `?startLon=${encodeURIComponent(start.lon)}` +
+        `&startLat=${encodeURIComponent(start.lat)}` +
+        `&endLon=${encodeURIComponent(destination.lon)}` +
+        `&endLat=${encodeURIComponent(destination.lat)}`;
 
     const response = await fetch(url);
 
     const data = await response.json();
 
-    return data.features[0];
+    if (!response.ok) {
 
+        throw new Error(
+            data.error ||
+            "Unable to calculate route."
+        );
+
+    }
+
+    return data;
 }

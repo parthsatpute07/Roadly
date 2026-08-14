@@ -1,12 +1,17 @@
 // ======================================
-// ROADLY - OPENROUTESERVICE PROXY
+// ROADLY ROUTE API
 // ======================================
 
 export default async function handler(req, res) {
 
     try {
 
-        const { startLon, startLat, endLon, endLat } = req.query;
+        const {
+            startLon,
+            startLat,
+            endLon,
+            endLat
+        } = req.query;
 
         if (
             startLon === undefined ||
@@ -27,19 +32,43 @@ export default async function handler(req, res) {
         if (!apiKey) {
 
             return res.status(500).json({
-                error: "OPENROUTESERVICE_API_KEY is not configured."
+                error:
+                    "OPENROUTESERVICE_API_KEY is not configured in Vercel."
             });
 
         }
 
         const url =
-            `https://api.openrouteservice.org/v2/directions/driving-car` +
-            `?api_key=${encodeURIComponent(apiKey)}` +
-            `&start=${encodeURIComponent(startLon)},${encodeURIComponent(startLat)}` +
-            `&end=${encodeURIComponent(endLon)},${encodeURIComponent(endLat)}`;
+            "https://api.openrouteservice.org/v2/directions/driving-car";
 
-        const response =
-            await fetch(url);
+        const response = await fetch(url, {
+
+            method: "POST",
+
+            headers: {
+                "Authorization": apiKey,
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                coordinates: [
+
+                    [
+                        Number(startLon),
+                        Number(startLat)
+                    ],
+
+                    [
+                        Number(endLon),
+                        Number(endLat)
+                    ]
+
+                ]
+
+            })
+
+        });
 
         const data =
             await response.json();
@@ -52,28 +81,19 @@ export default async function handler(req, res) {
             );
 
             return res.status(response.status).json({
-                error: "Route service failed.",
-                details: data
+
+                error:
+                    data.error?.message ||
+                    data.message ||
+                    "OpenRouteService request failed."
+
             });
 
         }
 
-        const route =
-            data?.features?.[0];
+        return res.status(200).json(data);
 
-        if (!route) {
-
-            return res.status(404).json({
-                error: "No route found."
-            });
-
-        }
-
-        return res.status(200).json(route);
-
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Route API error:",
@@ -81,7 +101,11 @@ export default async function handler(req, res) {
         );
 
         return res.status(500).json({
-            error: "Unable to calculate route."
+
+            error:
+                error.message ||
+                "Internal route server error."
+
         });
 
     }
