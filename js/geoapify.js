@@ -6,8 +6,7 @@
 async function getCoordinates(placeName) {
 
     const url =
-`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${CONFIG.GEOAPIFY_API_KEY}`;
-
+    `/api/geocode?text=${encodeURIComponent(placeName)}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -36,7 +35,7 @@ leisure.park
 &filter=circle:${lon},${lat},30000
 &bias=proximity:${lon},${lat}
 &limit=20
-&apiKey=${CONFIG.GEOAPIFY_API_KEY}`.replace(/\s+/g,"");
+
 
     const response = await fetch(url);
     const data = await response.json();

@@ -16,28 +16,26 @@ async function searchPlace(query) {
         return [];
     }
 
+    const params = new URLSearchParams({
+        text: query,
+        limit: "5"
+    });
+
     const response = await fetch(
-        `/api/geocode?text=${encodeURIComponent(query)}`
+        `/api/geocode?${params.toString()}`
     );
 
     const data = await response.json();
 
     if (!response.ok) {
 
-        console.error(
-            "Location search failed:",
-            data
-        );
-
         throw new Error(
             data.error ||
             "Location search failed."
         );
-
     }
 
     return data.features || [];
-
 }
 
 

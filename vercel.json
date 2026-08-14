@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/roadly-intro.html"
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }

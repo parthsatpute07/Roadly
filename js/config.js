@@ -1,11 +1,10 @@
-const CONFIG = {
+// ======================================
+// ROADLY CLIENT CONFIG
+// ======================================
 
-    OPENWEATHER_API_KEY: "YOUR_OPENWEATHER_API_KEY",
+// Public/client-side configuration only.
+// Secret API keys are stored in Vercel
+// Environment Variables and accessed by
+// /api functions.
 
-    OPENROUTESERVICE_API_KEY: "YOUR_OPENROUTESERVICE_API_KEY",
-
-    GEOAPIFY_API_KEY: "YOUR_GEOAPIFY_API_KEY",
-
-    GEMINI_API_KEY: "YOUR_GEMINI_API_KEY"
-
-};
+const CONFIG = {};
